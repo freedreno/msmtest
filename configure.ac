@@ -40,7 +40,7 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 AC_PROG_LIBTOOL
 
 # Obtain compiler/linker options for depedencies
-PKG_CHECK_MODULES(DRM, libdrm libdrm_freedreno)
+PKG_CHECK_MODULES(DRM, libdrm libdrm_freedreno >= 2.4.74)
 
 dnl ===========================================================================
 dnl check compiler flags

@@ -48,35 +48,37 @@ OUT_RING(struct fd_ringbuffer *ring, uint32_t data)
 
 static inline void
 OUT_RELOC(struct fd_ringbuffer *ring, struct fd_bo *bo,
-		uint32_t offset, uint32_t or, int32_t shift)
+		uint32_t offset, uint64_t or, int32_t shift)
 {
 	if (LOG_DWORDS) {
 		DEBUG_MSG("ring[%p]: OUT_RELOC   %04x:  %p+%u << %d", ring,
 				(uint32_t)(ring->cur - ring->last_start), bo, offset, shift);
 	}
-	fd_ringbuffer_reloc(ring, &(struct fd_reloc){
+	fd_ringbuffer_reloc2(ring, &(struct fd_reloc){
 		.bo = bo,
 		.flags = FD_RELOC_READ,
 		.offset = offset,
 		.or = or,
 		.shift = shift,
+		.orhi = or >> 32,
 	});
 }
 
 static inline void
 OUT_RELOCW(struct fd_ringbuffer *ring, struct fd_bo *bo,
-		uint32_t offset, uint32_t or, int32_t shift)
+		uint32_t offset, uint64_t or, int32_t shift)
 {
 	if (LOG_DWORDS) {
 		DEBUG_MSG("ring[%p]: OUT_RELOCW  %04x:  %p+%u << %d", ring,
 				(uint32_t)(ring->cur - ring->last_start), bo, offset, shift);
 	}
-	fd_ringbuffer_reloc(ring, &(struct fd_reloc){
+	fd_ringbuffer_reloc2(ring, &(struct fd_reloc){
 		.bo = bo,
 		.flags = FD_RELOC_READ | FD_RELOC_WRITE,
 		.offset = offset,
 		.or = or,
 		.shift = shift,
+		.orhi = or >> 32,
 	});
 }
 
@@ -103,6 +105,43 @@ OUT_PKT3(struct fd_ringbuffer *ring, uint8_t opcode, uint16_t cnt)
 {
 	BEGIN_RING(ring, cnt+1);
 	OUT_RING(ring, CP_TYPE3_PKT | ((cnt-1) << 16) | ((opcode & 0xFF) << 8));
+}
+
+/*
+ * Starting with a5xx, pkt4/pkt7 are used instead of pkt0/pkt3
+ */
+
+static inline unsigned
+_odd_parity_bit(unsigned val)
+{
+	/* See: http://graphics.stanford.edu/~seander/bithacks.html#ParityParallel
+	 * note that we want odd parity so 0x6996 is inverted.
+	 */
+	val ^= val >> 16;
+	val ^= val >> 8;
+	val ^= val >> 4;
+	val &= 0xf;
+	return (~0x6996 >> val) & 1;
+}
+
+static inline void
+OUT_PKT4(struct fd_ringbuffer *ring, uint16_t regindx, uint16_t cnt)
+{
+	BEGIN_RING(ring, cnt+1);
+	OUT_RING(ring, CP_TYPE4_PKT | cnt |
+			(_odd_parity_bit(cnt) << 7) |
+			((regindx & 0x3ffff) << 8) |
+			((_odd_parity_bit(regindx) << 27)));
+}
+
+static inline void
+OUT_PKT7(struct fd_ringbuffer *ring, uint8_t opcode, uint16_t cnt)
+{
+	BEGIN_RING(ring, cnt+1);
+	OUT_RING(ring, CP_TYPE7_PKT | cnt |
+			(_odd_parity_bit(cnt) << 15) |
+			((opcode & 0x7f) << 16) |
+			((_odd_parity_bit(opcode) << 23)));
 }
 
 static inline void
