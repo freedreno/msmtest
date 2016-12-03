@@ -84,5 +84,6 @@ AC_CONFIG_FILES([
 	Makefile
 	common/Makefile
 	a3xx/Makefile
+	a5xx/Makefile
 ])
 AC_OUTPUT

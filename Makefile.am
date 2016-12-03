@@ -21,4 +21,4 @@
 #  SOFTWARE.
 #
 
-SUBDIRS = common a3xx
+SUBDIRS = common a3xx a5xx
