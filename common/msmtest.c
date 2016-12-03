@@ -177,20 +177,8 @@ static int init_drm(void)
 	return 0;
 }
 
-static void page_flip_handler(int fd, unsigned int frame,
-		  unsigned int sec, unsigned int usec, void *data)
-{
-	int *waiting_for_flip = data;
-	*waiting_for_flip = 0;
-}
-
 int main(int argc, char *argv[])
 {
-	fd_set fds;
-	drmEventContext evctx = {
-			.version = DRM_EVENT_CONTEXT_VERSION,
-			.page_flip_handler = page_flip_handler,
-	};
 	struct fd_device *dev;
 	struct fd_pipe *pipe;
 	struct fd_ringbuffer *ring;
@@ -204,10 +192,6 @@ int main(int argc, char *argv[])
 		printf("failed to initialize DRM\n");
 		return ret;
 	}
-
-	FD_ZERO(&fds);
-	FD_SET(0, &fds);
-	FD_SET(drm.fd, &fds);
 
 	dev = fd_device_new(drm.fd);
 	if (!dev) {
