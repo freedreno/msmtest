@@ -43,6 +43,7 @@
 #include "ring.h"
 #include "adreno_common.xml.h"
 #include "adreno_pm4.xml.h"
+#include "a3xx.xml.h"
 
 int main(int argc, char *argv[])
 {
