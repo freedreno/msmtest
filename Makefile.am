@@ -35,6 +35,7 @@ LDADD = \
 
 CFLAGS = \
 	-O0 -g -lm \
+	-I$(top_srcdir)/include \
 	$(DRM_CFLAGS)
 
 msmtest_SOURCES = \
