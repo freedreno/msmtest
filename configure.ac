@@ -80,5 +80,8 @@ done
 
 AC_SUBST(WARN_CFLAGS)
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([
+	Makefile
+	a3xx/Makefile
+])
 AC_OUTPUT

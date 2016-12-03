@@ -21,11 +21,12 @@
 #  SOFTWARE.
 #
 
+SUBDIRS = a3xx
+
 bin_PROGRAMS =  \
 	msmtest \
 	submittest \
-	evilsubmittest \
-	pm4test
+	evilsubmittest
 
 LDFLAGS = \
 	-no-undefined
@@ -47,5 +48,3 @@ submittest_SOURCES = \
 evilsubmittest_SOURCES = \
 	evilsubmittest.c
 
-pm4test_SOURCES = \
-	pm4test.c
