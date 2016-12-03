@@ -16,8 +16,23 @@ CFLAGS = \
 	-I$(top_srcdir)/include \
 	$(DRM_CFLAGS)
 
+noinst_LTLIBRARIES = libcommon.la
+
+libcommon_la_SOURCES = \
+	common.c \
+	common.h
+
+libcommon_la_CFLAGS = \
+	$(CFLAGS)
+
+libcommon_la_LIBADD = \
+	$(LDADD)
+
 msmtest_SOURCES = \
 	msmtest.c
+
+msmtest_LDADD = \
+	libcommon.la
 
 submittest_SOURCES = \
 	submittest.c
