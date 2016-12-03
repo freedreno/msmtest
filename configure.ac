@@ -82,6 +82,7 @@ AC_SUBST(WARN_CFLAGS)
 
 AC_CONFIG_FILES([
 	Makefile
+	common/Makefile
 	a3xx/Makefile
 ])
 AC_OUTPUT
