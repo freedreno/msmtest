@@ -1,5 +1,8 @@
 AUTOMAKE_OPTIONS=subdir-objects
 
+bin_PROGRAMS = \
+	a5xx_dma
+
 LDFLAGS = \
 	-no-undefined
 
@@ -25,3 +28,8 @@ liba5xxcommon_la_LIBADD = \
 	$(top_builddir)/common/libcommon.la \
 	$(LDADD)
 
+a5xx_dma_SOURCES = \
+	a5xx_dma.c
+
+a5xx_dma_LDADD = \
+	liba5xxcommon.la

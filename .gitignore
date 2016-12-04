@@ -19,6 +19,7 @@ config
 configure
 install-sh
 ltmain.sh
+m4
 missing
 stamp-h1
 depcomp
@@ -30,5 +31,6 @@ msmtest
 submittest
 evilsubmittest
 a3xx_pm4test
+a5xx_dma
 tags
 TAGS
