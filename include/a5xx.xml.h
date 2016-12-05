@@ -12,10 +12,10 @@ The rules-ng-ng source files this header was generated from are:
 - /home/robclark/src/freedreno/envytools/rnndb/freedreno_copyright.xml  (   1572 bytes, from 2016-02-10 17:07:21)
 - /home/robclark/src/freedreno/envytools/rnndb/adreno/a2xx.xml          (  32907 bytes, from 2016-11-26 23:01:08)
 - /home/robclark/src/freedreno/envytools/rnndb/adreno/adreno_common.xml (  12025 bytes, from 2016-11-26 23:01:08)
-- /home/robclark/src/freedreno/envytools/rnndb/adreno/adreno_pm4.xml    (  22544 bytes, from 2016-11-26 23:01:08)
+- /home/robclark/src/freedreno/envytools/rnndb/adreno/adreno_pm4.xml    (  22544 bytes, from 2016-12-05 13:03:25)
 - /home/robclark/src/freedreno/envytools/rnndb/adreno/a3xx.xml          (  83840 bytes, from 2016-11-26 23:01:08)
 - /home/robclark/src/freedreno/envytools/rnndb/adreno/a4xx.xml          ( 110765 bytes, from 2016-11-26 23:01:48)
-- /home/robclark/src/freedreno/envytools/rnndb/adreno/a5xx.xml          (  91530 bytes, from 2016-12-02 01:32:42)
+- /home/robclark/src/freedreno/envytools/rnndb/adreno/a5xx.xml          (  92348 bytes, from 2016-12-05 15:44:59)
 - /home/robclark/src/freedreno/envytools/rnndb/adreno/ocmem.xml         (   1773 bytes, from 2015-09-24 17:30:00)
 
 Copyright (C) 2013-2016 by the following authors:
@@ -3301,12 +3301,6 @@ static inline uint32_t A5XX_HLSQ_CONTROL_3_REG_FRAGCOORDXYREGID(uint32_t val)
 {
 	return ((val) << A5XX_HLSQ_CONTROL_3_REG_FRAGCOORDXYREGID__SHIFT) & A5XX_HLSQ_CONTROL_3_REG_FRAGCOORDXYREGID__MASK;
 }
-#define A5XX_HLSQ_CONTROL_3_REG_FOOREGID__MASK			0x0000ff00
-#define A5XX_HLSQ_CONTROL_3_REG_FOOREGID__SHIFT			8
-static inline uint32_t A5XX_HLSQ_CONTROL_3_REG_FOOREGID(uint32_t val)
-{
-	return ((val) << A5XX_HLSQ_CONTROL_3_REG_FOOREGID__SHIFT) & A5XX_HLSQ_CONTROL_3_REG_FOOREGID__MASK;
-}
 
 #define REG_A5XX_HLSQ_CONTROL_4_REG				0x0000e788
 #define A5XX_HLSQ_CONTROL_4_REG_XYCOORDREGID__MASK		0x00ff0000
@@ -3509,7 +3503,13 @@ static inline uint32_t A5XX_HLSQ_CS_CNTL_INSTRLEN(uint32_t val)
 
 #define REG_A5XX_HLSQ_CONTEXT_SWITCH_CS_SW_4			0x0000e7dd
 
-#define REG_A5XX_RB_2D_DST_FILL					0x00002101
+#define REG_A5XX_RB_2D_SRC_SOLID_DW0				0x00002101
+
+#define REG_A5XX_RB_2D_SRC_SOLID_DW1				0x00002102
+
+#define REG_A5XX_RB_2D_SRC_SOLID_DW2				0x00002103
+
+#define REG_A5XX_RB_2D_SRC_SOLID_DW3				0x00002104
 
 #define REG_A5XX_RB_2D_SRC_INFO					0x00002107
 #define A5XX_RB_2D_SRC_INFO_COLOR_FORMAT__MASK			0x000000ff
@@ -3529,6 +3529,20 @@ static inline uint32_t A5XX_RB_2D_SRC_INFO_COLOR_SWAP(enum a3xx_color_swap val)
 
 #define REG_A5XX_RB_2D_SRC_HI					0x00002109
 
+#define REG_A5XX_RB_2D_SRC_SIZE					0x0000210a
+#define A5XX_RB_2D_SRC_SIZE_PITCH__MASK				0x0000ffff
+#define A5XX_RB_2D_SRC_SIZE_PITCH__SHIFT			0
+static inline uint32_t A5XX_RB_2D_SRC_SIZE_PITCH(uint32_t val)
+{
+	return ((val >> 6) << A5XX_RB_2D_SRC_SIZE_PITCH__SHIFT) & A5XX_RB_2D_SRC_SIZE_PITCH__MASK;
+}
+#define A5XX_RB_2D_SRC_SIZE_ARRAY_PITCH__MASK			0xffff0000
+#define A5XX_RB_2D_SRC_SIZE_ARRAY_PITCH__SHIFT			16
+static inline uint32_t A5XX_RB_2D_SRC_SIZE_ARRAY_PITCH(uint32_t val)
+{
+	return ((val >> 6) << A5XX_RB_2D_SRC_SIZE_ARRAY_PITCH__SHIFT) & A5XX_RB_2D_SRC_SIZE_ARRAY_PITCH__MASK;
+}
+
 #define REG_A5XX_RB_2D_DST_INFO					0x00002110
 #define A5XX_RB_2D_DST_INFO_COLOR_FORMAT__MASK			0x000000ff
 #define A5XX_RB_2D_DST_INFO_COLOR_FORMAT__SHIFT			0
@@ -3543,13 +3557,27 @@ static inline uint32_t A5XX_RB_2D_DST_INFO_COLOR_SWAP(enum a3xx_color_swap val)
 	return ((val) << A5XX_RB_2D_DST_INFO_COLOR_SWAP__SHIFT) & A5XX_RB_2D_DST_INFO_COLOR_SWAP__MASK;
 }
 
-#define REG_A5XX_RB_2D_SRC_FLAGS_LO				0x00002140
-
-#define REG_A5XX_RB_2D_SRC_FLAGS_HI				0x00002141
-
 #define REG_A5XX_RB_2D_DST_LO					0x00002111
 
 #define REG_A5XX_RB_2D_DST_HI					0x00002112
+
+#define REG_A5XX_RB_2D_DST_SIZE					0x00002113
+#define A5XX_RB_2D_DST_SIZE_PITCH__MASK				0x0000ffff
+#define A5XX_RB_2D_DST_SIZE_PITCH__SHIFT			0
+static inline uint32_t A5XX_RB_2D_DST_SIZE_PITCH(uint32_t val)
+{
+	return ((val >> 6) << A5XX_RB_2D_DST_SIZE_PITCH__SHIFT) & A5XX_RB_2D_DST_SIZE_PITCH__MASK;
+}
+#define A5XX_RB_2D_DST_SIZE_ARRAY_PITCH__MASK			0xffff0000
+#define A5XX_RB_2D_DST_SIZE_ARRAY_PITCH__SHIFT			16
+static inline uint32_t A5XX_RB_2D_DST_SIZE_ARRAY_PITCH(uint32_t val)
+{
+	return ((val >> 6) << A5XX_RB_2D_DST_SIZE_ARRAY_PITCH__SHIFT) & A5XX_RB_2D_DST_SIZE_ARRAY_PITCH__MASK;
+}
+
+#define REG_A5XX_RB_2D_SRC_FLAGS_LO				0x00002140
+
+#define REG_A5XX_RB_2D_SRC_FLAGS_HI				0x00002141
 
 #define REG_A5XX_RB_2D_DST_FLAGS_LO				0x00002143
 
@@ -3582,6 +3610,12 @@ static inline uint32_t A5XX_GRAS_2D_DST_INFO_COLOR_SWAP(enum a3xx_color_swap val
 {
 	return ((val) << A5XX_GRAS_2D_DST_INFO_COLOR_SWAP__SHIFT) & A5XX_GRAS_2D_DST_INFO_COLOR_SWAP__MASK;
 }
+
+#define REG_A5XX_UNKNOWN_2100					0x00002100
+
+#define REG_A5XX_UNKNOWN_2180					0x00002180
+
+#define REG_A5XX_UNKNOWN_2184					0x00002184
 
 #define REG_A5XX_TEX_SAMP_0					0x00000000
 #define A5XX_TEX_SAMP_0_MIPFILTER_LINEAR_NEAR			0x00000001
