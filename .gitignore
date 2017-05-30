@@ -34,5 +34,6 @@ a3xx_pm4test
 a5xx_blit
 a5xx_dma
 a5xx_mem_to_mem
+a5xx_perfctr
 tags
 TAGS
