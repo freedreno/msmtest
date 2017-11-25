@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
 	a5xx_emit_restore(dev->ring);
 
 	OUT_PKT7(ring, CP_EVENT_WRITE, 1);
-	OUT_RING(ring, UNK_26);
+	OUT_RING(ring, LRZ_FLUSH);
 
 	OUT_PKT7(ring, CP_SKIP_IB2_ENABLE_GLOBAL, 1);
 	OUT_RING(ring, 0x0);
