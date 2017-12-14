@@ -1,6 +1,7 @@
 AUTOMAKE_OPTIONS=subdir-objects
 
 bin_PROGRAMS = \
+	a5xx_draw_indirect \
 	a5xx_mem_to_mem \
 	a5xx_perfctr \
 	a5xx_blit \
@@ -41,6 +42,12 @@ a5xx_dma_SOURCES = \
 	a5xx_dma.c
 
 a5xx_dma_LDADD = \
+	liba5xxcommon.la
+
+a5xx_draw_indirect_SOURCES = \
+	a5xx_draw_indirect.c
+
+a5xx_draw_indirect_LDADD = \
 	liba5xxcommon.la
 
 a5xx_mem_to_mem_SOURCES = \
