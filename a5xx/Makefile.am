@@ -4,6 +4,7 @@ bin_PROGRAMS = \
 	a5xx_draw_indirect \
 	a5xx_mem_to_mem \
 	a5xx_perfctr \
+	a5xx_tiling \
 	a5xx_blit \
 	a5xx_dma
 
@@ -31,6 +32,12 @@ liba5xxcommon_la_CFLAGS = \
 liba5xxcommon_la_LIBADD = \
 	$(top_builddir)/common/libcommon.la \
 	$(LDADD)
+
+a5xx_tiling_SOURCES = \
+	a5xx_tiling.c
+
+a5xx_tiling_LDADD = \
+	liba5xxcommon.la
 
 a5xx_blit_SOURCES = \
 	a5xx_blit.c

@@ -155,25 +155,6 @@ struct msm_screen * msm_screen_setup(struct msm_device *dev)
  * buffer object
  */
 
-static int fourcc2cpp(uint32_t format)
-{
-	switch (format) {
-	case DRM_FORMAT_ARGB8888:
-	case DRM_FORMAT_ABGR8888:
-	case DRM_FORMAT_RGBA8888:
-	case DRM_FORMAT_BGRA8888:
-	case DRM_FORMAT_XRGB8888:
-	case DRM_FORMAT_XBGR8888:
-	case DRM_FORMAT_RGBX8888:
-	case DRM_FORMAT_BGRX8888:
-		return 4;
-	default:
-		// TODO maybe more formats someday
-		printf("unknown format\n");
-		return 0;
-	}
-}
-
 struct msm_bo *msm_bo_new(struct msm_device *dev, uint32_t width,
 		uint32_t height, uint32_t format)
 {

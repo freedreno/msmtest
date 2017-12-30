@@ -101,4 +101,51 @@ struct msm_bo *msm_bo_new_addr(struct msm_device *dev, uint32_t width,
 		uint32_t height, uint32_t format, uint64_t addr);
 void msm_bo_emit(struct msm_bo *bo, struct fd_ringbuffer *ring, uint32_t off);
 
+static inline
+int fourcc2cpp(uint32_t format)
+{
+	switch (format) {
+	case DRM_FORMAT_ARGB8888:
+	case DRM_FORMAT_ABGR8888:
+	case DRM_FORMAT_RGBA8888:
+	case DRM_FORMAT_BGRA8888:
+	case DRM_FORMAT_XRGB8888:
+	case DRM_FORMAT_XBGR8888:
+	case DRM_FORMAT_RGBX8888:
+	case DRM_FORMAT_BGRX8888:
+		return 4;
+	default:
+		// TODO maybe more formats someday
+		printf("unknown format\n");
+		return 0;
+	}
+}
+
+static void
+hexdump_dwords(const void *data, int sizedwords)
+{
+	uint32_t *buf = (void *) data;
+	int i;
+
+	for (i = 0; i < sizedwords; i++) {
+		if (!(i % 8))
+			printf("\t%08X:   ", (unsigned int) i*4);
+		printf(" %08x", buf[i]);
+		if ((i % 8) == 7)
+			printf("\n");
+	}
+
+	if (i % 8)
+		printf("\n");
+}
+
+static inline uint32_t
+env2u(const char *envvar)
+{
+	char *str = getenv(envvar);
+	if (str)
+		return strtoul(str, NULL, 0);
+	return 0;
+}
+
 #endif /* COMMON_H */

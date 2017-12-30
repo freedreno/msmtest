@@ -30,24 +30,6 @@
 #include "a5xx.xml.h"
 
 
-static void
-hexdump_dwords(const void *data, int sizedwords)
-{
-	uint32_t *buf = (void *) data;
-	int i;
-
-	for (i = 0; i < sizedwords; i++) {
-		if (!(i % 8))
-			printf("\t%08X:   ", (unsigned int) i*4);
-		printf(" %08x", buf[i]);
-		if ((i % 8) == 7)
-			printf("\n");
-	}
-
-	if (i % 8)
-		printf("\n");
-}
-
 int main(int argc, char *argv[])
 {
 	struct msm_device *dev;
