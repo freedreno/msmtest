@@ -48,6 +48,18 @@ int main(int argc, char *argv[])
 	for (i = 0; i < 32; i++)
 		ptr[i] = i;
 
+#if 1
+	OUT_PKT4(ring, REG_A5XX_CP_SCRATCH_REG(4), 1);
+	OUT_RING(ring, 0x01);
+
+	OUT_PKT7(ring, CP_UNK_39, 1);
+	OUT_RING(ring, (1 << 25) | REG_A5XX_CP_SCRATCH_REG(4));
+
+	OUT_PKT7(ring, CP_COND_REG_EXEC, 2);
+	OUT_RING(ring, 0x10000000);
+	OUT_RING(ring, 10); /* dwords to skip */
+#endif
+
 	OUT_PKT7(ring, CP_MEM_TO_MEM, 9);
 	OUT_RING(ring, 0x20000004);
 	OUT_RELOCW(ring, bo,  0, 0, 0);
