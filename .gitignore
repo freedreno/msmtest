@@ -37,5 +37,6 @@ a5xx_mem_to_mem
 a5xx_perfctr
 a5xx_draw_indirect
 a5xx_tiling
+a5xx_stateobj
 tags
 TAGS

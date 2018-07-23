@@ -153,4 +153,27 @@ OUT_IB(struct fd_ringbuffer *ring, struct fd_ringmarker *start,
 	OUT_RING(ring, fd_ringmarker_dwords(start, end));
 }
 
+static inline void
+OUT_IB5(struct fd_ringbuffer *ring, struct fd_ringbuffer *target)
+{
+	if (target->cur == target->start)
+		return;
+
+	unsigned count = fd_ringbuffer_cmd_count(target);
+
+	for (unsigned i = 0; i < count; i++) {
+		uint32_t dwords;
+		OUT_PKT7(ring, CP_INDIRECT_BUFFER, 3);
+		dwords = fd_ringbuffer_emit_reloc_ring_full(ring, target, i) / 4;
+		assert(dwords > 0);
+		OUT_RING(ring, dwords);
+	}
+}
+
+static inline void
+OUT_RB(struct fd_ringbuffer *ring, struct fd_ringbuffer *target)
+{
+	fd_ringbuffer_emit_reloc_ring_full(ring, target, 0);
+}
+
 #endif /* RING_H_ */
