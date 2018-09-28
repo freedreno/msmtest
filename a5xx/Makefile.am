@@ -1,6 +1,7 @@
 AUTOMAKE_OPTIONS=subdir-objects
 
 bin_PROGRAMS = \
+	a6xx_packet \
 	a5xx_stateobj \
 	a5xx_draw_indirect \
 	a5xx_mem_to_mem \
@@ -33,6 +34,12 @@ liba5xxcommon_la_CFLAGS = \
 liba5xxcommon_la_LIBADD = \
 	$(top_builddir)/common/libcommon.la \
 	$(LDADD)
+
+a6xx_packet_SOURCES = \
+	a6xx_packet.c
+
+a6xx_packet_LDADD = \
+	liba5xxcommon.la
 
 a5xx_stateobj_SOURCES = \
 	a5xx_stateobj.c
